@@ -1,0 +1,80 @@
+* {
+  margin: 0,
+  padding: 0
+}
+
+body {
+  background: #EEEEEE;
+}
+
+#grid {
+	margin: auto;
+	width: 1075px;
+	position: relative;
+}
+
+.row {
+	height: 20px;
+}
+
+.case {
+	width: 23px;
+	height: 23px;
+	float: left;
+	border: 1px solid rgba(0,0,0,0.1);
+}
+
+.case-h {
+	background-color: #8CFA89;
+}
+
+.case-f {
+	background-color: #002500;
+}
+
+.case-c {
+	background-color: #EDEEC0;
+}
+
+.case-m {
+	background-color: #544149;
+}
+
+.case-e {
+	background-color: #1BE7FF;
+}
+
+.case-p {
+	background-color: #9F7E69;
+}
+
+.agent {
+	background-color: yellow;
+	width: 19px;
+	height: 19px;
+	border-radius: 10px;
+	position: absolute;
+	margin-left: 3px;
+	margin-top: 3px;
+}
+
+.cible {
+	background-color: red;
+	width: 19px;
+	height: 19px;
+	border-radius: 10px;
+	position: absolute;
+	margin-left: 3px;
+	margin-top: 3px;
+}
+
+.chemin {
+  background-color: blue;
+  opacity: 0.5;
+  width: 19px;
+  height: 19px;
+  border-radius: 10px;
+  position: absolute;
+  margin-left: 3px;
+  margin-top: 3px;
+}
