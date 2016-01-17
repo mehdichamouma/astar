@@ -5,6 +5,7 @@
 
 body {
   background: #EEEEEE;
+  padding-bottom: 20px;
 }
 
 #grid {
@@ -14,8 +15,13 @@ body {
 }
 
 #grid-header {
-  float: left;
-  padding: 10px;
+  padding-top: 30px;
+  text-align: center;
+  height: 150px;
+}
+
+#grid-header .btn {
+  margin-bottom: 20px;
 }
 
 .grid-row {

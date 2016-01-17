@@ -19744,6 +19744,22 @@
 	    var _this = this;
 
 	    var self = this;
+	    var dureeChemin;
+	    if (this.state.chemin) {
+	      var coutChemin = this.state.chemin.reduce(function (prev, position) {
+	        return prev + self.getCost(position[0], position[1]);
+	      }, 0);
+	      dureeChemin = React.createElement(
+	        "div",
+	        null,
+	        "Durée du chemin: ",
+	        coutChemin,
+	        " secondes",
+	        React.createElement("br", null),
+	        "Longueur du chemin: ",
+	        this.state.chemin.length
+	      );
+	    }
 	    return React.createElement(
 	      "div",
 	      null,
@@ -19756,7 +19772,8 @@
 	              return _this.setState({ showSettings: true });
 	            } },
 	          "Settings"
-	        )
+	        ),
+	        dureeChemin
 	      ),
 	      React.createElement(
 	        "div",

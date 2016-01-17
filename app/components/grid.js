@@ -76,10 +76,18 @@ var Grid = React.createClass({
   },
   render: function() {
     var self = this;
+    var dureeChemin;
+    if(this.state.chemin) {
+      var coutChemin = this.state.chemin.reduce(function(prev, position) {
+        return prev + self.getCost(position[0], position[1]);
+      }, 0);
+      dureeChemin = (<div>Durée du chemin: {coutChemin} secondes<br/>Longueur du chemin: {this.state.chemin.length}</div>);
+    }
     return (
       <div>
         <header id="grid-header">
             <Button bsStyle="primary" bsSize="small" onClick={() => this.setState({showSettings: true})}>Settings</Button>
+            {dureeChemin}
         </header>
         <div id="grid">
           {this.props.data.map(function(row, indexX) {
