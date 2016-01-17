@@ -89,3 +89,7 @@ body {
   margin-left: 3px;
   margin-top: 3px;
 }
+
+.hidden {
+  visibility: hidden;
+}

@@ -13,6 +13,7 @@ var Grid = React.createClass({
       showSettings: false,
       agents: [],
       cible: [21,8],
+      nombreChemin: 0,
       chemin: [],
       costs: {
         'h': 20,
@@ -54,8 +55,10 @@ var Grid = React.createClass({
   },
 
   printChemin: function(sourceX, sourceY) {
+    this.setState({chemin: []});
     this.setState({
-      chemin: trouverChemin(sourceX, sourceY, this.state.cible[0], this.state.cible[1], this.getCost)
+      chemin: trouverChemin(sourceX, sourceY, this.state.cible[0], this.state.cible[1], this.getCost),
+      nombreChemin: this.state.nombreChemin + 1
     });
   },
   addAgent: function(indexX, indexY) {
@@ -103,8 +106,8 @@ var Grid = React.createClass({
               return (<Element type="agent" x={agent.posX} y={agent.posY} onClick={() => self.printChemin(agent.posX, agent.posY)} />);
           })}
           <Element type="cible" x={this.state.cible[0]} y={this.state.cible[1]} />
-          {this.state.chemin.map(function(pointChemin) {
-             return (<Element type="chemin" x={pointChemin[0]} y={pointChemin[1]} />);
+          {this.state.chemin.reverse().map(function(pointChemin, index) {
+             return (<Element key={"chemin."+self.state.nombreChemin+"."+index} wait={index*30} type="chemin" x={pointChemin[0]} y={pointChemin[1]} />);
           })}
         </div>
         <Modal show={this.state.showSettings} onHide={this.closeSettings}>
