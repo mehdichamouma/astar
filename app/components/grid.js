@@ -2,11 +2,13 @@ var React = require("react");
 var trouverChemin = require("../astar/astar.js");
 var Case = require("./case");
 var Element = require('./element');
+var Modal = require('react-bootstrap').Modal;
 
 var Grid = React.createClass({
 
   getInitialState: function() {
     return {
+      showForm: false,
       agents: [],
       cible: [21,8],
       chemin: [],
@@ -51,26 +53,28 @@ var Grid = React.createClass({
   },
   render: function() {
     var self = this;
-    return (<div>
-                {this.props.data.map(function(row, indexX) {
-                    return (
-                      <div className="row">
-                          {row.map(function(t, indexY) {
-                              return (<Case onClick={function() { self.addAgent(indexY, indexX)}} type={t} />);
-                          })}
-                      </div>
-                    );
-                })}
-             {this.state.agents.map(function(agent) {
-                return (<Element type="agent" x={agent.posX} y={agent.posY} onClick={() => self.printChemin(agent.posX, agent.posY)} />);
-             })}
-            <Element type="cible" x={this.state.cible[0]} y={this.state.cible[1]} />
+    return (
+      <div>
+        <div id="grid">
+          {this.props.data.map(function(row, indexX) {
+              return (
+                <div className="grid-row">
+                    {row.map(function(t, indexY) {
+                        return (<Case onClick={function() { self.addAgent(indexY, indexX)}} type={t} />);
+                    })}
+                </div>
+              );
+          })}
+          {this.state.agents.map(function(agent) {
+              return (<Element type="agent" x={agent.posX} y={agent.posY} onClick={() => self.printChemin(agent.posX, agent.posY)} />);
+          })}
+          <Element type="cible" x={this.state.cible[0]} y={this.state.cible[1]} />
+          {this.state.chemin.map(function(pointChemin) {
+             return (<Element type="chemin" x={pointChemin[0]} y={pointChemin[1]} />);
+          })}
+        </div>
 
-            {this.state.chemin.map(function(pointChemin) {
-               return (<Element type="chemin" x={pointChemin[0]} y={pointChemin[1]} />);
-            })}
-
-            </div>);
+      </div>);
   }
 });
 

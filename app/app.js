@@ -13,4 +13,4 @@ var Main = React.createClass({
   }
 });
 
-ReactDom.render(<Grid data={data.map.content} agents={data.map.agents}/>, document.getElementById('grid'));
+ReactDom.render(<Grid data={data.map.content} agents={data.map.agents}/>, document.getElementById('app'));
