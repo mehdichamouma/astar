@@ -19669,13 +19669,15 @@
 	var Case = __webpack_require__(169);
 	var Element = __webpack_require__(170);
 	var Modal = __webpack_require__(172).Modal;
+	var Button = __webpack_require__(172).Button;
+	var Input = __webpack_require__(172).Input;
 
 	var Grid = React.createClass({
 	  displayName: "Grid",
 
 	  getInitialState: function getInitialState() {
 	    return {
-	      showForm: false,
+	      showSettings: false,
 	      agents: [],
 	      cible: [21, 8],
 	      chemin: [],
@@ -19690,16 +19692,32 @@
 	    };
 	  },
 
+	  saveSettings: function saveSettings() {
+	    this.setState({
+	      costs: {
+	        'h': this.refs.h.getValue(),
+	        'e': this.refs.e.getValue(),
+	        'm': this.refs.m.getValue(),
+	        'f': this.refs.f.getValue(),
+	        'c': this.refs.c.getValue(),
+	        'p': this.refs.p.getValue()
+	      }
+	    });
+	  },
+	  closeSettings: function closeSettings() {
+	    this.setState({ showSettings: false });
+	  },
+
 	  /**
 	  * Renvoie le coût en fonction de la position (x,y)
 	  *
 	  */
 	  getCost: function getCost(x, y) {
-	    if (x < 0 || y < 0 || x >= this.props.data[0].length || y >= this.props.length) {
+	    if (x < 0 || y < 0 || x >= this.props.data[0].length || y >= this.props.data.length) {
 	      return -1;
 	    }
 	    var type = this.props.data[y][x];
-	    return this.state.costs[type] ? this.state.costs[type] : -1;
+	    return parseInt(this.state.costs[type]) || -1;
 	  },
 
 	  printChemin: function printChemin(sourceX, sourceY) {
@@ -19719,10 +19737,23 @@
 	    console.log(this.props.data);
 	  },
 	  render: function render() {
+	    var _this = this;
+
 	    var self = this;
 	    return React.createElement(
 	      "div",
 	      null,
+	      React.createElement(
+	        "header",
+	        { id: "grid-header" },
+	        React.createElement(
+	          Button,
+	          { bsStyle: "primary", bsSize: "small", onClick: function onClick() {
+	              return _this.setState({ showSettings: true });
+	            } },
+	          "Settings"
+	        )
+	      ),
 	      React.createElement(
 	        "div",
 	        { id: "grid" },
@@ -19746,6 +19777,38 @@
 	        this.state.chemin.map(function (pointChemin) {
 	          return React.createElement(Element, { type: "chemin", x: pointChemin[0], y: pointChemin[1] });
 	        })
+	      ),
+	      React.createElement(
+	        Modal,
+	        { show: this.state.showSettings, onHide: this.closeSettings },
+	        React.createElement(
+	          Modal.Header,
+	          { closeButton: true },
+	          React.createElement(
+	            Modal.Title,
+	            null,
+	            "Settings"
+	          )
+	        ),
+	        React.createElement(
+	          Modal.Body,
+	          null,
+	          React.createElement(
+	            "form",
+	            { className: "form-horizontal" },
+	            React.createElement(Input, { label: "Text", labelClassName: "col-xs-2", wrapperClassName: "col-xs-10", ref: "h", label: "herbe", type: "text", value: this.state.costs.h, onChange: this.saveSettings }),
+	            React.createElement(Input, { label: "Text", labelClassName: "col-xs-2", wrapperClassName: "col-xs-10", ref: "e", label: "eau", type: "text", value: this.state.costs.e, onChange: this.saveSettings }),
+	            React.createElement(Input, { label: "Text", labelClassName: "col-xs-2", wrapperClassName: "col-xs-10", ref: "m", label: "mur", type: "text", value: this.state.costs.m, onChange: this.saveSettings }),
+	            React.createElement(Input, { label: "Text", labelClassName: "col-xs-2", wrapperClassName: "col-xs-10", ref: "f", label: "foret", type: "text", value: this.state.costs.f, onChange: this.saveSettings }),
+	            React.createElement(Input, { label: "Text", labelClassName: "col-xs-2", wrapperClassName: "col-xs-10", ref: "c", label: "chemin", type: "text", value: this.state.costs.c, onChange: this.saveSettings }),
+	            React.createElement(Input, { label: "Text", labelClassName: "col-xs-2", wrapperClassName: "col-xs-10", ref: "p", label: "pont", type: "text", value: this.state.costs.p, onChange: this.saveSettings }),
+	            React.createElement(
+	              Button,
+	              { bsStyle: "primary", bsSize: "small", onClick: this.closeSettings },
+	              "Close"
+	            )
+	          )
+	        )
 	      )
 	    );
 	  }
