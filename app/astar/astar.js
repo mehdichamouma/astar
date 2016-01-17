@@ -170,14 +170,14 @@ var getCost = function(type){
       return 20;
     case 'e':
     case 'm':
-      return 10000;
+      return -1;
     case 'f':
-      return 10000;
+      return 70;
     case 'c':
     case 'p':
       return 5;
     default:
-      return 10000;
+      return -1;
   }
 }
 
@@ -204,7 +204,13 @@ var trouverChemin = function(sourceX, sourceY, destX, destY, map){
   var source = node(sourceX, sourceY, coutSource, coutDest, null)
   aExplorer.insererSiNonVisite(source);
 
-  while(aExplorer.hasSommetsAExplorer() && !finish){
+  //On ne doit pas pouvoir commencer si on est dans l'eau ou sur un mur
+  var wrongStart = false
+  if(getCost(map[sourceY][sourceX])<0){
+    wrongStart=true
+  }
+
+  while(aExplorer.hasSommetsAExplorer() && !finish && !wrongStart){
     //On recuperer le sommet ayant le cout minimum
     //La fonction assure aussi qu'on ne récuperera pas le sommet une deuxième fois
     var X = aExplorer.pop()
@@ -213,10 +219,12 @@ var trouverChemin = function(sourceX, sourceY, destX, destY, map){
     var successeurs = getSuccessorsCoords(X.x, X.y)
     successeurs.map(function(S){
       if(S[0] >= 0 && S[1] >= 0 && S[0] < tailleX && S[1] < tailleY) {
-        coutSource = X.coutSource + getCost(map[S[1]][S[0]])
-        coutDest = cheminHeuristique(S[0], S[1], destX, destY)
-        aExplorer.insererSiNonVisite(node(S[0], S[1], coutSource, coutDest, [X.x, X.y]))
-
+        //On n'insère pas une case représentant l'eau ou le mur dans l'arbre
+        if(getCost(map[S[1]][S[0]])>0){
+          coutSource = X.coutSource + getCost(map[S[1]][S[0]])
+          coutDest = cheminHeuristique(S[0], S[1], destX, destY)
+          aExplorer.insererSiNonVisite(node(S[0], S[1], coutSource, coutDest, [X.x, X.y]))
+        }
         //On a finit si la destination est un des successeurs
         if(S[0]==destX && S[1]==destY){
           finish=true
@@ -228,7 +236,9 @@ var trouverChemin = function(sourceX, sourceY, destX, destY, map){
   //On récupère et renvoie le chemin
   var p = [destX, destY]
   var chemin = []
-  while(p!=null){
+
+  //On vérifie que l'on a bien trouvé un chemin avant de le calculer
+  while(p!=null && !wrongStart && finish){
     chemin.push(p)
     p = aExplorer.recupPredecesseur(p[0], p[1])
   }
