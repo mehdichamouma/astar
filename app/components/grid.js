@@ -59,12 +59,17 @@ var Grid = React.createClass({
     });
   },
   addAgent: function(indexX, indexY) {
-    var nextState = this.state;
-    nextState.agents.push({
-      posX: (indexX),
-      posY: (indexY)
-    });
-    this.setState(nextState);
+    if(this.getCost(indexX, indexY) > 0) {
+      var nextState = this.state;
+      nextState.agents.push({
+        posX: (indexX),
+        posY: (indexY)
+      });
+      this.setState(nextState);
+    }
+    else {
+      alert("Impossible d'ajouter l'agent ici");
+    }
   },
   componentDidMount: function() {
       console.log(this.props.data);

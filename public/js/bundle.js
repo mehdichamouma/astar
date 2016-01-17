@@ -19726,12 +19726,16 @@
 	    });
 	  },
 	  addAgent: function addAgent(indexX, indexY) {
-	    var nextState = this.state;
-	    nextState.agents.push({
-	      posX: indexX,
-	      posY: indexY
-	    });
-	    this.setState(nextState);
+	    if (this.getCost(indexX, indexY) > 0) {
+	      var nextState = this.state;
+	      nextState.agents.push({
+	        posX: indexX,
+	        posY: indexY
+	      });
+	      this.setState(nextState);
+	    } else {
+	      alert("Impossible d'ajouter l'agent ici");
+	    }
 	  },
 	  componentDidMount: function componentDidMount() {
 	    console.log(this.props.data);
