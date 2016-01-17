@@ -114,8 +114,8 @@ var Grid = React.createClass({
             <Modal.Body>
                 <form className="form-horizontal">
                     <Input label="Text" labelClassName="col-xs-2" wrapperClassName="col-xs-10" ref="h" label="herbe" type="text" value={this.state.costs.h} onChange={this.saveSettings}/>
-                    <Input label="Text" labelClassName="col-xs-2" wrapperClassName="col-xs-10" ref="e" label="eau" type="text" value={this.state.costs.e} onChange={this.saveSettings}/>
-                    <Input label="Text" labelClassName="col-xs-2" wrapperClassName="col-xs-10" ref="m" label="mur" type="text" value={this.state.costs.m} onChange={this.saveSettings}/>
+                    <Input label="Text" disabled={true} labelClassName="col-xs-2" wrapperClassName="col-xs-10" ref="e" label="eau" type="text" value={this.state.costs.e} onChange={this.saveSettings}/>
+                    <Input label="Text" disabled={true} labelClassName="col-xs-2" wrapperClassName="col-xs-10" ref="m" label="mur" type="text" value={this.state.costs.m} onChange={this.saveSettings}/>
                     <Input label="Text" labelClassName="col-xs-2" wrapperClassName="col-xs-10" ref="f" label="foret" type="text" value={this.state.costs.f} onChange={this.saveSettings}/>
                     <Input label="Text" labelClassName="col-xs-2" wrapperClassName="col-xs-10" ref="c" label="chemin" type="text" value={this.state.costs.c} onChange={this.saveSettings}/>
                     <Input label="Text" labelClassName="col-xs-2" wrapperClassName="col-xs-10" ref="p" label="pont" type="text" value={this.state.costs.p} onChange={this.saveSettings}/>
