@@ -12,9 +12,35 @@ var Grid = React.createClass({
       chemin: []
     }
   },
+
+  /**
+  * Renvoie le coût en fonction de la position (x,y)
+  *
+  */
+  getCost: function(x, y){
+    if(x < 0 || y < 0 || x >= this.props.data[0].length || y >= this.props.length) {
+      return -1
+    }
+    var type = this.props.data[y][x];
+    switch(type){
+      case 'h':
+        return 20;
+      case 'e':
+      case 'm':
+        return -1;
+      case 'f':
+        return 70;
+      case 'c':
+      case 'p':
+        return 5;
+      default:
+        return -1;
+    }
+  },
+
   printChemin: function(sourceX, sourceY) {
     this.setState({
-      chemin: trouverChemin(sourceX, sourceY, this.state.cible[0], this.state.cible[1], this.props.data)
+      chemin: trouverChemin(sourceX, sourceY, this.state.cible[0], this.state.cible[1], this.getCost)
     });
   },
   addAgent: function(indexX, indexY) {

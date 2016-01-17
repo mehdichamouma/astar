@@ -160,43 +160,20 @@ var getSuccessorsCoords = function(x, y){
   ]
 }
 
-/**
-* Renvoie le coût en fonction du type de case
-*
-*/
-var getCost = function(type){
-  switch(type){
-    case 'h':
-      return 20;
-    case 'e':
-    case 'm':
-      return -1;
-    case 'f':
-      return 70;
-    case 'c':
-    case 'p':
-      return 5;
-    default:
-      return -1;
-  }
-}
+
 
 
 /**
 * Function trouverChemin
-* Arguments: sourceX, sourceY, destX, destY, map
+* Arguments: sourceX, sourceY, destX, destY, getCost
 * Trouve le chemin le plus court en utilisant l'algorithme A*
 */
-var trouverChemin = function(sourceX, sourceY, destX, destY, map){
+var trouverChemin = function(sourceX, sourceY, destX, destY, getCost){
   //Contient la liste des cases à explorer
   var aExplorer = aExplorerConstructor();
 
   //Mettre à vrai quand on est arrivé a destination
   var finish = false
-
-  //Taille de la map
-  var tailleX = map[0].length
-  var tailleY = map.length
 
   //Initialisation
   var coutDest = cheminHeuristique(sourceX, sourceY, destX, destY)
@@ -206,7 +183,7 @@ var trouverChemin = function(sourceX, sourceY, destX, destY, map){
 
   //On ne doit pas pouvoir commencer si on est dans l'eau ou sur un mur
   var wrongStart = false
-  if(getCost(map[sourceY][sourceX])<0){
+  if(getCost(sourceX, sourceY) < 0){
     wrongStart=true
   }
 
@@ -218,17 +195,16 @@ var trouverChemin = function(sourceX, sourceY, destX, destY, map){
     //On parcours ses successeurs et on les ajoute dans les sommets à explorer (s'ils n'ont pas été déjà visité)
     var successeurs = getSuccessorsCoords(X.x, X.y)
     successeurs.map(function(S){
-      if(S[0] >= 0 && S[1] >= 0 && S[0] < tailleX && S[1] < tailleY) {
-        //On n'insère pas une case représentant l'eau ou le mur dans l'arbre
-        if(getCost(map[S[1]][S[0]])>0){
-          coutSource = X.coutSource + getCost(map[S[1]][S[0]])
-          coutDest = cheminHeuristique(S[0], S[1], destX, destY)
-          aExplorer.insererSiNonVisite(node(S[0], S[1], coutSource, coutDest, [X.x, X.y]))
-        }
-        //On a finit si la destination est un des successeurs
-        if(S[0]==destX && S[1]==destY){
-          finish=true
-        }
+      var cost = getCost(S[0], S[1]);
+      //On n'insère pas une case représentant l'eau ou le mur dans l'arbre
+      if(cost>0){
+        coutSource = X.coutSource + cost;
+        coutDest = cheminHeuristique(S[0], S[1], destX, destY)
+        aExplorer.insererSiNonVisite(node(S[0], S[1], coutSource, coutDest, [X.x, X.y]))
+      }
+      //On a finit si la destination est un des successeurs
+      if(S[0]==destX && S[1]==destY){
+        finish=true
       }
     });
   }
