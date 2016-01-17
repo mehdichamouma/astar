@@ -19676,7 +19676,15 @@
 	    return {
 	      agents: [],
 	      cible: [21, 8],
-	      chemin: []
+	      chemin: [],
+	      costs: {
+	        'h': 20,
+	        'e': -1,
+	        'm': -1,
+	        'f': 70,
+	        'c': 5,
+	        'p': 5
+	      }
 	    };
 	  },
 
@@ -19689,20 +19697,7 @@
 	      return -1;
 	    }
 	    var type = this.props.data[y][x];
-	    switch (type) {
-	      case 'h':
-	        return 20;
-	      case 'e':
-	      case 'm':
-	        return -1;
-	      case 'f':
-	        return 70;
-	      case 'c':
-	      case 'p':
-	        return 5;
-	      default:
-	        return -1;
-	    }
+	    return this.state.costs[type] ? this.state.costs[type] : -1;
 	  },
 
 	  printChemin: function printChemin(sourceX, sourceY) {
