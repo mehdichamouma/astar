@@ -18,5 +18,6 @@ An A* algorithm custom implementation in JS for teaching purpose
 
 #Credits
 
-Mehdi CHAMOUMA
-François BEIGER
+* Fatima-Zahra AMAIZ
+* Mehdi CHAMOUMA
+* François BEIGER
