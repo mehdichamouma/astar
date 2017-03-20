@@ -2,6 +2,8 @@
 
 An A* algorithm custom implementation in JS for teaching purpose
 
+![alt tag](https://raw.githubusercontent.com/mehdichamouma/astar/master/app.png)
+
 #Usage
 
 * Télécharger le dossier (git clone ou .zip)
